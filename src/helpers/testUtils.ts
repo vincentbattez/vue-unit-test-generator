@@ -1,4 +1,7 @@
-export function testProps(wrapper, props) {
+import { Wrapper } from '@vue/test-utils'
+import Vue from "vue"
+
+export function testProps(wrapper: Wrapper<Vue>, props: any): any {
   Object.entries(props).map((prop) => {
     const propName = _getPropNameFromProp(prop);
 
@@ -27,7 +30,7 @@ export function testProps(wrapper, props) {
  *   my_prop_number: 123,
  * }
  */
-export function buildPropsData(props) {
+export function buildPropsData(props: object): object {
   let builder = {};
 
   Object.entries(props).map((prop) => {
@@ -63,7 +66,7 @@ export function buildPropsData(props) {
  * ]
  * @private
  */
-function _setMockedValue (prop) {
+function _setMockedValue (prop: any): any {
   const propType = _getTypeFromProp(prop);
 
   return (
@@ -90,7 +93,7 @@ function _setMockedValue (prop) {
  * @example return example:
  * 'my_prop_title'
  */
-function _getPropNameFromProp(prop) {
+function _getPropNameFromProp(prop: any): any {
   return prop[0];
 }
 
@@ -103,7 +106,7 @@ function _getPropNameFromProp(prop) {
  * @example return example:
  * 'string'
  */
-function _getTypeFromProp(prop) {
+function _getTypeFromProp(prop: any): any {
   return prop[1].type;
 }
 
@@ -117,7 +120,7 @@ function _getTypeFromProp(prop) {
  * @example return example:
  * true
  */
-function _isRequireProp(prop) {
+function _isRequireProp(prop: any): any {
   return prop[1].require === true;
 }
 

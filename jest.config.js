@@ -71,6 +71,7 @@ module.exports = {
   // An array of file extensions your modules use
   moduleFileExtensions: [
     'js',
+    'ts',
     'json',
     'vue',
   ],
@@ -168,6 +169,7 @@ module.exports = {
     // process `*.vue` files with `vue-jest`
     '^.+\\.vue$': 'vue-jest',
     '^.+\\.js$': 'babel-jest',
+    '^.+\\.ts$': 'ts-jest',
   },
 
   // An array of regexp pattern strings that are matched against all source file paths, matched files will skip transformation

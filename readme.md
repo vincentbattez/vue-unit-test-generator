@@ -1,6 +1,6 @@
 ### Commit convention
 We follow [Emoji-Log](https://github.com/ahmadawais/Emoji-Log/#philosophy) convension for commit message 
-
+- E.g. `📦 NEW`, `👌 IMPROVE`, `🐛 FIX`, `📖 DOC`, `🚀 RELEASE`, and `✅ TEST`
 ### Todo
 
 - [ ] Make API:
