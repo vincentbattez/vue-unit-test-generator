@@ -2,7 +2,7 @@
   "name": "vue-unit-test-builder",
   "version": "1.0.0",
   "description": "",
-  "main": "autoTest.test.js",
+  "main": "example/tests/components/autoTest.test.js",
   "scripts": {
     "start": "jest",
     "start:dev": "jest --watchAll",

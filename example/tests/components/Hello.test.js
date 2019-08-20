@@ -1,6 +1,7 @@
 import { shallowMount } from '@vue/test-utils'
-import { testProps, buildPropsData } from "./helpers/testUtils";
-import Hello from './Hello.vue'
+import { testProps, buildPropsData } from "../../../src/helpers/testUtils";
+
+import Hello from '../../src/components/Hello'
 
 const myAutomaticTest = {
   props: {

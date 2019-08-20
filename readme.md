@@ -1,4 +1,7 @@
-#Todo
+### Commit convention
+We follow [Emoji-Log](https://github.com/ahmadawais/Emoji-Log/#philosophy) convension for commit message 
+
+### Todo
 
 - [ ] Make API:
 
