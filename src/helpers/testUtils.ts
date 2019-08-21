@@ -123,23 +123,3 @@ function _getTypeFromProp(prop: any): any {
 function _isRequireProp(prop: any): any {
   return prop[1].require === true;
 }
-
-
-
-
-// const myAutomaticTest = {
-//   props: {
-//     named: {
-//       type: 'string',
-//       require: true,
-//     },
-//     title: {
-//       type: 'string',
-//       default: 'popo',
-//     },
-//   }
-// };
-//
-// console.log(
-//   buildPropsData(myAutomaticTest.props)
-// )

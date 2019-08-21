@@ -4,6 +4,7 @@ import { testProps, buildPropsData } from "../../../src/helpers/testUtils";
 import Hello from '../../src/components/Hello'
 
 const myAutomaticTest = {
+  component: Hello,
   props: {
     named: {
       type: 'string',
@@ -17,7 +18,7 @@ const myAutomaticTest = {
 };
 let wrapper;
 
-wrapper = shallowMount(Hello, {
+wrapper = shallowMount(myAutomaticTest.component, {
   propsData: buildPropsData(myAutomaticTest.props)
 });
 
