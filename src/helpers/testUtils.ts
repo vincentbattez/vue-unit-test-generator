@@ -1,8 +1,11 @@
 import { Wrapper } from '@vue/test-utils'
 import Vue from "vue"
 
-export function testProps(wrapper: Wrapper<Vue>, props: any): any {
-  Object.entries(props).map((prop) => {
+import { PropInterface } from "../interfaces/prop.interface";
+import { PropsTypeEnum } from "../enums/PropsType.enum";
+
+export function testProps(wrapper: Wrapper<Vue>, props: PropInterface[]): any {
+  props.map((prop: PropInterface) => {
     const propName = _getPropNameFromProp(prop);
 
     return test(propName, () => {
@@ -11,8 +14,6 @@ export function testProps(wrapper: Wrapper<Vue>, props: any): any {
 
       // When
       const componentPropValue = wrapper.props()[propName];
-      // eslint-disable-next-line no-console
-      console.log("-----wrapper.props()[propName]:", wrapper.props()[propName]);
 
       // Then
       expect(componentPropValue).toBe(mockedValue)
@@ -30,10 +31,10 @@ export function testProps(wrapper: Wrapper<Vue>, props: any): any {
  *   my_prop_number: 123,
  * }
  */
-export function buildPropsData(props: object): object {
+export function buildPropsData(props: PropInterface[]): object {
   let builder = {};
 
-  Object.entries(props).map((prop) => {
+  props.map((prop) => {
     if (!_isRequireProp(prop)) {
       return
     }
@@ -66,8 +67,8 @@ export function buildPropsData(props: object): object {
  * ]
  * @private
  */
-function _setMockedValue (prop: any): any {
-  const propType = _getTypeFromProp(prop);
+function _setMockedValue (prop: PropInterface): any {
+  const propType = String(_getTypeFromProp(prop));
 
   return (
     propType === 'string'
@@ -93,8 +94,8 @@ function _setMockedValue (prop: any): any {
  * @example return example:
  * 'my_prop_title'
  */
-function _getPropNameFromProp(prop: any): any {
-  return prop[0];
+function _getPropNameFromProp(prop: PropInterface): string {
+  return prop.name;
 }
 
 /**
@@ -106,10 +107,9 @@ function _getPropNameFromProp(prop: any): any {
  * @example return example:
  * 'string'
  */
-function _getTypeFromProp(prop: any): any {
-  return prop[1].type;
+function _getTypeFromProp(prop: PropInterface): PropsTypeEnum {
+  return prop.type;
 }
-
 
 /**
  *
@@ -120,6 +120,6 @@ function _getTypeFromProp(prop: any): any {
  * @example return example:
  * true
  */
-function _isRequireProp(prop: any): any {
-  return prop[1].require === true;
+function _isRequireProp(prop: PropInterface): boolean {
+  return prop.require === true;
 }

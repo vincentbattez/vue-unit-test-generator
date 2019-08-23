@@ -1,12 +1,11 @@
-
 import { Wrapper } from '@vue/test-utils'
 import Vue from "vue"
 
-import { PropsInterface } from './props.interface'
+import { PropInterface } from './prop.interface'
 
 export interface ComponentConfigInterface {
-  component: Wrapper<Vue>,
-  props?: PropsInterface,
+  component: any,
+  props?: any,
   data?: any,
   computed?: any,
 }

@@ -1,44 +1,41 @@
-import { shallowMount } from '@vue/test-utils'
-import { testProps, buildPropsData } from "../../../src/helpers/testUtils";
-
 import Hello from '../../src/components/Hello'
+import VueTestGenerator from '../../../src/services/VueTestGenerator';
 
 const myAutomaticTest = {
   component: Hello,
-  props: {
-    named: {
+  props: [
+    {
+      name: 'named',
       type: 'string',
       require: true,
     },
-    title: {
+    {
+      name: 'title',
       type: 'string',
-      default: 'popo',
-    },
-  }
+      default: "poro",
+    }
+  ],
+  data: [],
+  computed: []
 };
-let wrapper;
 
-wrapper = shallowMount(myAutomaticTest.component, {
-  propsData: buildPropsData(myAutomaticTest.props)
-});
-
-// eslint-disable-next-line no-console
-console.log('-----', buildPropsData(myAutomaticTest.props));
-
-// beforeEach(() => {
-//   wrapper = shallowMount(Hello, {
-//     propsData: buildPropsData(myAutomaticTest.props)
+//
+// describe('Component: Hello', () => {
+//   const props = myAutomaticTest.props;
+//
+//   describe('props', () => {
+//     testProps(wrapper, props)
 //   })
 // });
-//
-// afterEach(() => {
-//   wrapper.destroy()
-// });
 
-describe('Component: Hello', () => {
-  const props = myAutomaticTest.props;
 
-  describe('props', () => {
-    testProps(wrapper, props)
-  })
+
+const vtg = new VueTestGenerator(myAutomaticTest, {
+  expectedValue: {
+    string: 'toto'
+  }
+});
+
+describe("t", () => {
+  vtg.generate('props');
 });
