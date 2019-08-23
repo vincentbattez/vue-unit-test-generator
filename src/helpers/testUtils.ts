@@ -1,11 +1,11 @@
 import { Wrapper } from '@vue/test-utils'
 import Vue from "vue"
 
-import { PropInterface } from "../interfaces/prop.interface";
+import { ConfigPropInterface } from "../interfaces/props/ConfigProp.interface";
 import { PropsTypeEnum } from "../enums/PropsType.enum";
 
-export function testProps(wrapper: Wrapper<Vue>, props: PropInterface[]): any {
-  props.map((prop: PropInterface) => {
+export function testProps(wrapper: Wrapper<Vue>, props: ConfigPropInterface[]): any {
+  props.map((prop: ConfigPropInterface) => {
     const propName = _getPropNameFromProp(prop);
 
     return test(propName, () => {
@@ -31,7 +31,7 @@ export function testProps(wrapper: Wrapper<Vue>, props: PropInterface[]): any {
  *   my_prop_number: 123,
  * }
  */
-export function buildPropsData(props: PropInterface[]): object {
+export function buildPropsData(props: ConfigPropInterface[]): object {
   let builder = {};
 
   props.map((prop) => {
@@ -67,7 +67,7 @@ export function buildPropsData(props: PropInterface[]): object {
  * ]
  * @private
  */
-function _setMockedValue (prop: PropInterface): any {
+function _setMockedValue (prop: ConfigPropInterface): any {
   const propType = String(_getTypeFromProp(prop));
 
   return (
@@ -94,7 +94,7 @@ function _setMockedValue (prop: PropInterface): any {
  * @example return example:
  * 'my_prop_title'
  */
-function _getPropNameFromProp(prop: PropInterface): string {
+function _getPropNameFromProp(prop: ConfigPropInterface): string {
   return prop.name;
 }
 
@@ -107,7 +107,7 @@ function _getPropNameFromProp(prop: PropInterface): string {
  * @example return example:
  * 'string'
  */
-function _getTypeFromProp(prop: PropInterface): PropsTypeEnum {
+function _getTypeFromProp(prop: ConfigPropInterface): PropsTypeEnum {
   return prop.type;
 }
 
@@ -120,6 +120,6 @@ function _getTypeFromProp(prop: PropInterface): PropsTypeEnum {
  * @example return example:
  * true
  */
-function _isRequireProp(prop: PropInterface): boolean {
+function _isRequireProp(prop: ConfigPropInterface): boolean {
   return prop.require === true;
 }

@@ -11,31 +11,17 @@ const myAutomaticTest = {
     },
     {
       name: 'title',
-      type: 'string',
-      default: "poro",
+      type: 'boolean',
+      default: false,
     }
   ],
   data: [],
   computed: []
 };
 
-//
-// describe('Component: Hello', () => {
-//   const props = myAutomaticTest.props;
-//
-//   describe('props', () => {
-//     testProps(wrapper, props)
-//   })
-// });
 
+const vtg = new VueTestGenerator(myAutomaticTest);
 
-
-const vtg = new VueTestGenerator(myAutomaticTest, {
-  expectedValue: {
-    string: 'toto'
-  }
-});
-
-describe("t", () => {
+describe("Tests auto-generate", () => {
   vtg.generate('props');
 });
