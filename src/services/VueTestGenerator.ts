@@ -1,11 +1,14 @@
 import { shallowMount } from '@vue/test-utils'
 import { ConfigInterface } from '../interfaces/Config.interface'
 import { defaultsDeep } from 'lodash'
+
 import { ConfigPropInterface } from "../interfaces/props/ConfigProp.interface";
-import {ExpectedValueInterface} from "../interfaces/ExpectedValue.interface";
-import {PropInterface} from "../interfaces/props/Prop.interface";
-import {OptionInterface} from "../interfaces/Option.interface";
-import {ConfigDto} from "../interfaces/dto/config.dto";
+import { PropInterface } from "../interfaces/props/Prop.interface";
+import { PropsDataInterface } from "../interfaces/props/PropsData.interface";
+import { ExpectedValueInterface } from "../interfaces/ExpectedValue.interface";
+import { OptionInterface } from "../interfaces/Option.interface";
+
+import { ConfigDto } from "../interfaces/dto/config.dto";
 
 enum TestTypeEnum {
   'props',
@@ -16,14 +19,21 @@ enum TestTypeEnum {
 
 export default class VueTestGenerator {
   // DTO
-  private config: any;
+  private config: {
+    component: any,
+    propCollection: {
+      original: ConfigInterface[],
+    },
+  };
   private readonly options: any;
 
   // COMPUTED
   private expectedValue: ExpectedValueInterface;
 
   private mock: {
-    propCollection: PropInterface[]
+    propCollection: {
+      toPropEntity: PropInterface[]
+    }
   };
 
   private readonly component: {
@@ -36,17 +46,21 @@ export default class VueTestGenerator {
     options?: OptionInterface | any
   ) {
     this.options = options;
+
+    // config passed to the constructor
     this.config = {
       component: config.component,
-      propCollection: config.props,
-      dataCollection: config.data,
-      computedCollection: config.computed
+      propCollection: {
+        original: config.props,
+      },
     };
     this.expectedValue = this._buildExpectedValue(options);
 
     // Config data
     this.mock = {
-      propCollection: this._adaptConfigPropCollectionToComponentPropCollection(config.props),
+      propCollection: {
+        toPropEntity: this.toPropsCollection(config.props),
+      },
     };
 
     // Component data when is mounted
@@ -71,32 +85,32 @@ export default class VueTestGenerator {
   generate (type: string) {
     describe(`Component: ${this.config.component.name}`, () => {
       if (type === 'props') {
-        this._testPropCollection(this.config.props)
+        this._testPropCollection()
       }
     })
   }
 
   /**
    *
-   * @param mockPropCollection
    * @private
    */
-  private _testPropCollection (mockPropCollection: PropInterface[]) {
-    // eslint-disable-next-line no-console
-    console.log(this.mock.propCollection)
-
+  private _testPropCollection () {
     this._buildComponent({
-      propsData: this._adaptPropCollectionToPropsData(this.mock.propCollection)
+      propsData: this.toPropsData(this.mock.propCollection.toPropEntity)
     });
 
+    console.log('config:\n', this.config.propCollection.original, '\n\n', 'mock:\n', this.mock.propCollection.toPropEntity, '\n\n', 'component:\n', this.component.propCollection);
+
     describe('props', () => {
-      this.mock.propCollection.map((configAdaptedProp: PropInterface) => {
-        test('prop.name', () => {
-          console.log(configAdaptedProp);
-          // When
-          // const title = this.component.propCollection.title;
-          //
-          // // Then
+      this.mock.propCollection.toPropEntity.map((mockProp: PropInterface) => {
+        test(mockProp.name, () => {
+          // // When
+          // const title = this.component.propCollection;
+          // // eslint-disable-next-line no-console
+          // console.log('propCollection:', this.component.propCollection)
+          // console.log('mockProp:', mockProp)
+
+          // Then
           // expect(title).toBe('oui')
         })
       })
@@ -155,7 +169,7 @@ export default class VueTestGenerator {
    * @returns {PropInterface[]}
    * @private
    */
-  private _adaptConfigPropCollectionToComponentPropCollection (configPropCollection: ConfigPropInterface[]): PropInterface[] {
+  private toPropsCollection (configPropCollection: ConfigPropInterface[]): PropInterface[] {
     let configPropsCollectionAdapted: any[] = [];
 
     configPropCollection.map(prop => {
@@ -188,7 +202,7 @@ export default class VueTestGenerator {
     );
   }
 
-  private _adaptPropCollectionToPropsData (propCollection: PropInterface[]) {
+  private toPropsData (propCollection: PropInterface[]): PropsDataInterface {
     return propCollection.map(prop => {
       return {
         [prop.name]: prop.value

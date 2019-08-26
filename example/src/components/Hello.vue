@@ -13,8 +13,8 @@ export default {
       required: true,
     },
     title: {
-      type: String,
-      default: 'popa',
+      type: Boolean,
+      required: true,
     },
   },
 }

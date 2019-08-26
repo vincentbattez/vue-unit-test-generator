@@ -7,12 +7,12 @@ const myAutomaticTest = {
     {
       name: 'named',
       type: 'string',
-      require: true,
+      required: true,
     },
     {
       name: 'title',
       type: 'boolean',
-      default: false,
+      required: true,
     }
   ],
   data: [],
